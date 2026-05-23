@@ -142,7 +142,7 @@ window.forgotPassword = async function () {
   const email = document.getElementById("loginEmail").value;
 
   if (!email) {
-    alert("Enter email first");
+    document.getElementById("message").innerText = "Please enter your email";
     return;
   }
 
