@@ -138,7 +138,22 @@ window.togglePassword = function (id, icon) {
 // ================= OTP SYSTEM =================
 
 // 🔹 Forgot Password (Send OTP + Email)
-window.forgotPassword = async function () {
+ch ❌";
+    msg.style.color = "red";
+    return;
+  }
+
+  try {
+    const res = await fetch("https://login-auth-backend-z235.onrender.com/reset-password", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+      body: JSON.stringify({
+        email,
+        otp,
+        newPassword
+      })window.forgotPassword = async function () {
   const email = document.getElementById("loginEmail").value;
 
   if (!email) {
@@ -148,7 +163,7 @@ window.forgotPassword = async function () {
 
   try {
     // Call backend
-    const res = await fetch("fetch("https://login-auth-backend-z235.onrender.com/send-otp")", {
+   const res = await fetch("https://login-auth-backend-z235.onrender.com/send-otp", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -192,22 +207,7 @@ window.verifyOTP = async function () {
   const msg = document.getElementById("otpMessage");
 
   if (newPassword !== confirmPassword) {
-    msg.textContent = "Passwords do not match ❌";
-    msg.style.color = "red";
-    return;
-  }
-
-  try {
-    const res = await fetch("fetch("https://login-auth-backend-z235.onrender.com/reset-password")", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        otp,
-        newPassword
-      })
+    msg.textContent = "Passwords do not mat
     });
 
     const data = await res.json();
