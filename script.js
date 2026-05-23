@@ -133,27 +133,11 @@ window.togglePassword = function (id, icon) {
     icon.textContent = "👁️";
   }
 };
-
-
 // ================= OTP SYSTEM =================
 
 // 🔹 Forgot Password (Send OTP + Email)
+window.forgotPassword = async function () {
 
-    msg.style.color = "red";
-    return;
-  }
-
-  try {
-    const res = await fetch("https://login-auth-backend-z235.onrender.com/reset-password", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-      body: JSON.stringify({
-        email,
-        otp,
-        newPassword
-      })window.forgotPassword = async function () {
   const email = document.getElementById("loginEmail").value;
 
   if (!email) {
@@ -162,8 +146,8 @@ window.togglePassword = function (id, icon) {
   }
 
   try {
-    // Call backend
-   const res = await fetch("https://login-auth-backend-z235.onrender.com/send-otp", {
+
+    const res = await fetch("https://login-auth-backend-z235.onrender.com/send-otp", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -174,60 +158,93 @@ window.togglePassword = function (id, icon) {
     const data = await res.json();
 
     if (data.success) {
+
       const otp = data.otp;
 
-      console.log("OTP:", otp);
-
-      // Send email using EmailJS
       await emailjs.send("service_1826", "template_1826", {
         to_email: email,
         otp: otp
       });
 
-      alert("OTP sent to your email 📧");
+      alert("OTP sent to your email");
 
       document.getElementById("loginForm").style.display = "none";
       document.getElementById("otpSection").style.display = "block";
     }
 
   } catch (err) {
+
     console.error(err);
-    alert("Server or Email error ❌");
+    alert("Server or Email error");
+
   }
 };
 
 
 // 🔹 Verify OTP + Reset Password
 window.verifyOTP = async function () {
+
   const email = document.getElementById("loginEmail").value;
+
   const otp = document.getElementById("otpInput").value;
+
   const newPassword = document.getElementById("newPassword").value;
+
   const confirmPassword = document.getElementById("confirmNewPassword").value;
 
   const msg = document.getElementById("otpMessage");
 
+
   if (newPassword !== confirmPassword) {
-    msg.textContent = "Passwords do not mat
+
+    msg.textContent = "Passwords do not match";
+
+    msg.style.color = "red";
+
+    return;
+  }
+
+  try {
+
+    const res = await fetch("https://login-auth-backend-z235.onrender.com/reset-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email,
+        otp,
+        newPassword
+      })
     });
 
     const data = await res.json();
 
     if (data.success) {
-      msg.textContent = "Password reset successful ✅";
+
+      msg.textContent = "Password reset successful";
+
       msg.style.color = "green";
 
       setTimeout(() => {
+
         document.getElementById("otpSection").style.display = "none";
+
         document.getElementById("loginForm").style.display = "block";
+
       }, 2000);
 
     } else {
+
       msg.textContent = data.message;
+
       msg.style.color = "red";
     }
 
   } catch (err) {
-    msg.textContent = "Server error ❌";
+
+    msg.textContent = "Server error";
+
     msg.style.color = "red";
   }
 };
