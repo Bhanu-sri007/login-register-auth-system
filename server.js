@@ -1,5 +1,12 @@
 const express = require("express");
 const cors = require("cors");
+const admin = require("firebase-admin");
+
+const serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
 
 const app = express();
 
@@ -8,13 +15,8 @@ app.use(express.json());
 
 let storedOTP = "";
 
-// Home Route
-app.get("/", (req, res) => {
-  res.send("Backend Running Successfully 🚀");
-});
-
-// Send OTP Route
-app.post("/send-otp", (req, res) => {
+// Send OTP
+app.post("/send-otp", async (req, res) => {
 
   const { email } = req.body;
 
@@ -35,22 +37,37 @@ app.post("/send-otp", (req, res) => {
   });
 });
 
-// Reset Password Route
-app.post("/reset-password", (req, res) => {
+// Reset Password
+app.post("/reset-password", async (req, res) => {
 
-  const { otp } = req.body;
+  const { email, otp, newPassword } = req.body;
 
-  if (otp === storedOTP) {
+  if (otp !== storedOTP) {
+    return res.json({
+      success: false,
+      message: "Invalid OTP"
+    });
+  }
+
+  try {
+
+    const user = await admin.auth().getUserByEmail(email);
+
+    await admin.auth().updateUser(user.uid, {
+      password: newPassword
+    });
 
     res.json({
       success: true
     });
 
-  } else {
+  } catch (error) {
+
+    console.error(error);
 
     res.json({
       success: false,
-      message: "Invalid OTP"
+      message: "Password update failed"
     });
   }
 });
@@ -60,3 +77,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+  
