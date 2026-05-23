@@ -138,7 +138,7 @@ window.togglePassword = function (id, icon) {
 // ================= OTP SYSTEM =================
 
 // 🔹 Forgot Password (Send OTP + Email)
-ch ❌";
+
     msg.style.color = "red";
     return;
   }
