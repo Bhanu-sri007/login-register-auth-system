@@ -137,30 +137,7 @@ window.togglePassword = function (id, icon) {
 };
 // ================= OTP SYSTEM =================
 
-// 🔹 Forgot Password (Send OTP + Email)
-window.forgotPassword = async function () {
-
-  const email = document.getElementById("loginEmail").value;
-
-  if (!email) {
-    alert("Please enter your email");
-    return;
-  }
-
-  try {
-
-    await sendPasswordResetEmail(auth, email);
-
-    alert("Password reset email sent successfully 📧");
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("Failed to send reset email");
-  }
-};
-  // ================= FORGOT PASSWORD =================
+// ================= FORGOT PASSWORD =================
 
 window.forgotPassword = async function () {
 
@@ -173,19 +150,47 @@ window.forgotPassword = async function () {
 
   try {
 
-    await sendPasswordResetEmail(auth, email);
+    // Send OTP request to backend
+    const res = await fetch("https://login-auth-backend-z235.onrender.com/send-otp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email })
+    });
 
-    alert("Password reset email sent successfully 📧");
+    const data = await res.json();
+
+    if (data.success) {
+
+      const otp = data.otp;
+
+      // Send OTP email using EmailJS
+      await emailjs.send("service_1826", "template_1826", {
+        to_email: email,
+        otp: otp
+      });
+
+      alert("OTP sent successfully 📧");
+
+      // Show OTP Section
+      document.getElementById("loginForm").style.display = "none";
+
+      document.getElementById("otpSection").style.display = "block";
+
+    } else {
+
+      alert(data.message);
+    }
 
   } catch (error) {
 
     console.error(error);
 
-    alert("Failed to send reset email");
+    alert("Failed to send OTP");
 
   }
 };
-
 
 // 🔹 Verify OTP + Reset Password
 window.verifyOTP = async function () {
