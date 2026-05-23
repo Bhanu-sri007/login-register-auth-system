@@ -8,6 +8,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/fireba
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  updatePassword,
   signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
@@ -221,7 +222,9 @@ window.verifyOTP = async function () {
     const data = await res.json();
 
     if (data.success) {
+    const userCredential = await signInWithEmailAndPassword(auth, email, document.getElementById("loginPassword").value);
 
+    await updatePassword(userCredential.user, newPassword);
       msg.textContent = "Password reset successful";
 
       msg.style.color = "green";
