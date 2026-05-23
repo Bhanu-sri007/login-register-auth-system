@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Login & Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="circle c1"></div>
+<div class="circle c2"></div>
+<div class="circle c3"></div>
+<div class="circle c4"></div>
+<div class="circle c5"></div>
+<div class="container">
+  <div class="form-box">
+
+    <!-- Toggle Buttons -->
+    <div class="button-box">
+      <button onclick="showLogin()">Login</button>
+      <button onclick="showRegister()">Register</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="form active">
+      <h2>Login</h2>
+
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <div class="password-box">
+  <input type="password" id="loginPassword" placeholder="Password" required>
+
+  <span onclick="togglePassword('loginPassword', this)">👁️</span>
+</div>
+
+      <p class="forgot" onclick="forgotPassword()">Forgot Password?</p>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <!-- OTP Section -->
+    <div id="otpSection" style="display:none;" class="form">
+
+      <h2>Reset Password</h2>
+
+      <input type="text" id="otpInput" placeholder="Enter OTP" required>
+      <input type="password" id="newPassword" placeholder="New Password" required>
+      <input type="password" id="confirmNewPassword" placeholder="Confirm Password" required>
+
+      <button onclick="verifyOTP()">Verify & Reset</button>
+      <button onclick="forgotPassword()">Resend OTP</button>
+
+      <p id="otpMessage"></p>
+
+    </div>
+
+    <!-- Register Form -->
+    <form id="registerForm" class="form">
+      <h2>Register</h2>
+
+      <p id="registerMessage" class="message"></p>
+
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="tel" id="phone" placeholder="Phone Number" required>
+
+      <div class="password-box">
+        <input type="password" id="password" placeholder="Password" required>
+        <span onclick="togglePassword('password', this)">👁️</span>
+      </div>
+
+      <div class="password-box">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <span onclick="togglePassword('confirmPassword', this)">👁️</span>
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+
+  </div>
+</div>
+
+<script type="module" src="script.js"></script>
+
+<script>
+function showLogin() {
+  document.getElementById("loginForm").classList.add("active");
+  document.getElementById("registerForm").classList.remove("active");
+}
+
+function showRegister() {
+  document.getElementById("registerForm").classList.add("active");
+  document.getElementById("loginForm").classList.remove("active");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,449 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body{
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #edf3fb;
+
+  overflow: hidden;
+  position: relative;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================= FORM BOX ================= */
+
+.form-box{
+
+  width: 500px;
+  padding: 50px;
+
+  background: rgba(255,255,255,0.2);
+
+  border-radius: 20px;
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(255,255,255,0.4);
+
+  box-shadow:
+  0 8px 32px rgba(31,38,135,0.2),
+  0 0 20px rgba(126,200,245,0.5);
+
+  text-align: center;
+
+  position: relative;
+  z-index: 10;
+
+  animation: popup 0.7s ease;
+}
+
+/* ================= POPUP ANIMATION ================= */
+
+@keyframes popup{
+
+  from{
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to{
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ================= LOGIN REGISTER BUTTONS ================= */
+
+.button-box{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.button-box button{
+
+  width: 48%;
+  padding: 14px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(135deg,#6dd5fa,#2980b9);
+
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.button-box button:hover{
+
+  transform: scale(1.05);
+
+  background: linear-gradient(135deg,#4facfe,#00f2fe);
+}
+
+/* ================= FORM ================= */
+
+.form{
+  display: none;
+  flex-direction: column;
+}
+
+.form.active{
+  display: flex;
+}
+
+.form h2{
+  margin-bottom: 25px;
+  font-size: 28px;
+}
+
+/* ================= INPUTS ================= */
+
+.form input{
+
+  width: 100%;
+  padding: 15px;
+  margin: 12px 0;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #9ecae1;
+
+  color: #333;
+  font-size: 16px;
+
+  outline: none;
+
+  transition: 0.3s;
+}
+
+/* Input focus effect */
+
+.form input:focus{
+
+  transform: scale(1.02);
+
+  box-shadow:
+  0 0 10px rgba(79,172,254,0.5);
+}
+
+/* ================= PASSWORD BOX ================= */
+
+.password-box{
+  position: relative;
+  width: 100%;
+}
+
+.password-box input{
+  padding-right: 45px;
+}
+
+.password-box span{
+
+  position: absolute;
+
+  right: 15px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* ================= LOGIN BUTTON ================= */
+
+.form button{
+
+  width: 100%;
+  padding: 15px;
+
+  margin-top: 20px;
+
+  border: none;
+  border-radius: 30px;
+
+  background: #7ec8f5;
+
+  color: #333;
+
+  font-size: 22px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.form button:hover{
+
+  transform: scale(1.03);
+
+  background: #6bbbe9;
+}
+
+/* ================= FORGOT PASSWORD ================= */
+
+.forgot{
+
+  text-align: right;
+
+  font-size: 15px;
+
+  color: #007bff;
+
+  cursor: pointer;
+
+  margin-top: 5px;
+}
+
+.forgot:hover{
+  text-decoration: underline;
+}
+
+/* ================= LOADER ================= */
+
+.loader{
+
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #28a745;
+
+  border-radius: 50%;
+
+  width: 25px;
+  height: 25px;
+
+  animation: spin 1s linear infinite;
+
+  margin: 10px auto;
+}
+
+.hidden{
+  display: none;
+}
+
+@keyframes spin{
+
+  0%{
+    transform: rotate(0deg);
+  }
+
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+/* ================= MESSAGE ================= */
+
+.message{
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.success{
+  color: green;
+}
+
+.error{
+  color: red;
+}
+
+/* ================= SHAKE ================= */
+
+@keyframes shake{
+
+  0%{
+    transform: translateX(0);
+  }
+
+  25%{
+    transform: translateX(-5px);
+  }
+
+  50%{
+    transform: translateX(5px);
+  }
+
+  75%{
+    transform: translateX(-5px);
+  }
+
+  100%{
+    transform: translateX(0);
+  }
+}
+
+.shake{
+  animation: shake 0.3s;
+  border: 2px solid red;
+}
+
+/* ================= OTP SECTION ================= */
+
+#otpSection{
+
+  display: flex;
+  flex-direction: column;
+}
+
+#otpSection input{
+
+  margin: 10px 0;
+  padding: 12px;
+
+  border-radius: 10px;
+  border: none;
+
+  background: #9ecae1;
+}
+
+#otpSection button{
+
+  padding: 12px;
+  margin-top: 10px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #28a745;
+
+  color: white;
+
+  cursor: pointer;
+}
+
+#otpSection button:hover{
+  background: #218838;
+}
+
+/* ================= FLOATING CIRCLES ================= */
+
+.circle{
+
+  position: absolute;
+
+  border-radius: 50%;
+
+  background: rgba(173,216,230,0.4);
+
+  backdrop-filter: blur(15px);
+
+  box-shadow:
+  0 0 40px rgba(255,255,255,0.8);
+
+  animation: float 6s ease-in-out infinite;
+
+  z-index: 1;
+}
+
+@keyframes float{
+
+  0%{
+    transform: translateY(0px);
+  }
+
+  50%{
+    transform: translateY(-20px);
+  }
+
+  100%{
+    transform: translateY(0px);
+  }
+}
+
+.c1{
+  width: 120px;
+  height: 120px;
+
+  top: 50px;
+  left: 80px;
+}
+
+.c2{
+  width: 180px;
+  height: 180px;
+
+  top: 80px;
+  right: 180px;
+}
+
+.c3{
+  width: 150px;
+  height: 150px;
+
+  bottom: 80px;
+  left: 120px;
+}
+
+.c4{
+  width: 220px;
+  height: 220px;
+
+  right: 60px;
+  bottom: 100px;
+}
+
+.c5{
+  width: 140px;
+  height: 140px;
+
+  bottom: 20px;
+  left: 45%;
+}
+
+/* ================= AUTOFILL FIX ================= */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+
+  -webkit-box-shadow:
+  0 0 0 30px #9ecae1 inset !important;
+
+  -webkit-text-fill-color: #333 !important;
+}
+/* When user clicks/types */
+
+.form input:focus,
+.form input:not(:placeholder-shown){
+
+  background: white;
+
+  transition: 0.3s;
+}
+
+/* Browser autofill */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+
+  -webkit-box-shadow:
+  0 0 0 30px white inset !important;
+
+  -webkit-text-fill-color: #333 !important;
+}
