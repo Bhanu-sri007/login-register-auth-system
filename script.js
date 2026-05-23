@@ -9,6 +9,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updatePassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
@@ -142,41 +143,45 @@ window.forgotPassword = async function () {
   const email = document.getElementById("loginEmail").value;
 
   if (!email) {
-    document.getElementById("message").innerText = "Please enter your email";
+    alert("Please enter your email");
     return;
   }
 
   try {
 
-    const res = await fetch("https://login-auth-backend-z235.onrender.com/send-otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email })
-    });
+    await sendPasswordResetEmail(auth, email);
 
-    const data = await res.json();
+    alert("Password reset email sent successfully 📧");
 
-    if (data.success) {
+  } catch (error) {
 
-      const otp = data.otp;
+    console.error(error);
 
-      await emailjs.send("service_1826", "template_1826", {
-        to_email: email,
-        otp: otp
-      });
+    alert("Failed to send reset email");
+  }
+};
+  // ================= FORGOT PASSWORD =================
 
-      alert("OTP sent to your email");
+window.forgotPassword = async function () {
 
-      document.getElementById("loginForm").style.display = "none";
-      document.getElementById("otpSection").style.display = "block";
-    }
+  const email = document.getElementById("loginEmail").value;
 
-  } catch (err) {
+  if (!email) {
+    alert("Please enter your email");
+    return;
+  }
 
-    console.error(err);
-    alert("Server or Email error");
+  try {
+
+    await sendPasswordResetEmail(auth, email);
+
+    alert("Password reset email sent successfully 📧");
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Failed to send reset email");
 
   }
 };
