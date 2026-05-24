@@ -205,10 +205,9 @@ window.verifyOTP = async function () {
 
   const msg = document.getElementById("otpMessage");
 
-
   if (newPassword !== confirmPassword) {
 
-    msg.textContent = "Passwords do not match";
+    msg.textContent = "Passwords do not match ❌";
 
     msg.style.color = "red";
 
@@ -218,10 +217,13 @@ window.verifyOTP = async function () {
   try {
 
     const res = await fetch("https://login-auth-backend-z235.onrender.com/reset-password", {
+
       method: "POST",
+
       headers: {
         "Content-Type": "application/json"
       },
+
       body: JSON.stringify({
         email,
         otp,
@@ -232,20 +234,16 @@ window.verifyOTP = async function () {
     const data = await res.json();
 
     if (data.success) {
-    const userCredential = await signInWithEmailAndPassword(auth, email, document.getElementById("loginPassword").value);
 
-    await updatePassword(userCredential.user, newPassword);
-      msg.textContent = "Password reset successful";
+      msg.textContent = "Password updated successfully ✅";
 
       msg.style.color = "green";
 
-      setTimeout(() => {
+      alert("Password reset successful");
 
-        document.getElementById("otpSection").style.display = "none";
+      document.getElementById("otpSection").style.display = "none";
 
-        document.getElementById("loginForm").style.display = "block";
-
-      }, 2000);
+      document.getElementById("loginForm").style.display = "block";
 
     } else {
 
@@ -254,9 +252,11 @@ window.verifyOTP = async function () {
       msg.style.color = "red";
     }
 
-  } catch (err) {
+  } catch (error) {
 
-    msg.textContent = "Server error";
+    console.error(error);
+
+    msg.textContent = "Server error ❌";
 
     msg.style.color = "red";
   }
