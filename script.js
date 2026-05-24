@@ -151,6 +151,7 @@ window.forgotPassword = async function () {
   try {
 
     // Send OTP request to backend
+    document.getElementById("loader").style.display = "block";
     const res = await fetch("https://login-auth-backend-z235.onrender.com/send-otp", {
       method: "POST",
       headers: {
@@ -170,7 +171,7 @@ window.forgotPassword = async function () {
         to_email: email,
         otp: otp
       });
-
+document.getElementById("loader").style.display = "none";
       alert("OTP sent successfully 📧");
 
       // Show OTP Section
@@ -184,7 +185,7 @@ window.forgotPassword = async function () {
     }
 
   } catch (error) {
-
+document.getElementById("loader").style.display = "none";
     console.error(error);
 
     alert("Failed to send OTP");
