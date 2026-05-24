@@ -6,9 +6,10 @@ admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-   privateKey: process.env.FIREBASE_PRIVATE_KEY
+    privateKey: process.env.FIREBASE_PRIVATE_KEY
   })
 });
+
 const app = express();
 
 app.use(cors());
@@ -16,7 +17,7 @@ app.use(express.json());
 
 let storedOTP = "";
 
-// Send OTP
+// ================= SEND OTP =================
 app.post("/send-otp", async (req, res) => {
 
   const { email } = req.body;
@@ -27,28 +28,35 @@ app.post("/send-otp", async (req, res) => {
       message: "Email required"
     });
   }
-try {
 
-  await admin.auth().getUserByEmail(email);
+  try {
 
-} catch (error) {
+    // Check if user exists
+    await admin.auth().getUserByEmail(email);
 
-  return res.json({
-    success: false,
-    message: "Email not registered"
-  });
-}
-  storedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    // Generate OTP
+    storedOTP = Math.floor(100000 + Math.random() * 900000).toString();
 
-  console.log("Generated OTP:", storedOTP);
+    console.log("Generated OTP:", storedOTP);
 
-  res.json({
-    success: true,
-    otp: storedOTP
-  });
+    return res.json({
+      success: true,
+      otp: storedOTP
+    });
+
+  } catch (error) {
+
+    console.log("User not found");
+
+    return res.json({
+      success: false,
+      message: "Email not registered ❌"
+    });
+  }
 });
 
-// Reset Password
+
+// ================= RESET PASSWORD =================
 app.post("/reset-password", async (req, res) => {
 
   const { email, otp, newPassword } = req.body;
@@ -56,7 +64,7 @@ app.post("/reset-password", async (req, res) => {
   if (otp !== storedOTP) {
     return res.json({
       success: false,
-      message: "Invalid OTP"
+      message: "Invalid OTP ❌"
     });
   }
 
@@ -68,24 +76,26 @@ app.post("/reset-password", async (req, res) => {
       password: newPassword
     });
 
-    res.json({
-      success: true
+    return res.json({
+      success: true,
+      message: "Password updated successfully ✅"
     });
 
   } catch (error) {
 
     console.error(error);
 
-    res.json({
+    return res.json({
       success: false,
-      message: "Password update failed"
+      message: "Password update failed ❌"
     });
   }
 });
 
+
+// ================= SERVER =================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-  
