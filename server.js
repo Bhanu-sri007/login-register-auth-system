@@ -27,7 +27,17 @@ app.post("/send-otp", async (req, res) => {
       message: "Email required"
     });
   }
+try {
 
+  await admin.auth().getUserByEmail(email);
+
+} catch (error) {
+
+  return res.json({
+    success: false,
+    message: "Email not registered"
+  });
+}
   storedOTP = Math.floor(100000 + Math.random() * 900000).toString();
 
   console.log("Generated OTP:", storedOTP);
