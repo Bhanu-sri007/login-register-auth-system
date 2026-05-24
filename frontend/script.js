@@ -164,9 +164,9 @@ window.forgotPassword = async function () {
 
     const data = await res.json();
 
-    if (data.success) {
+    if (data.success === true) {
 
-      const otp = data.otp;
+  const otp = data.otp;
 
       // Send OTP email using EmailJS
       await emailjs.send("service_1826", "template_1826", {
@@ -183,8 +183,12 @@ document.getElementById("loader").style.display = "none";
 
     } else {
 
-      alert(data.message);
-    }
+  document.getElementById("loader").style.display = "none";
+
+  alert(data.message);
+
+  return;
+}
 
   } catch (error) {
 document.getElementById("loader").style.display = "none";
