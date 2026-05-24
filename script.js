@@ -93,7 +93,9 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    alert("Login Successful ✅");
+    localStorage.setItem("userEmail", email);
+
+window.location.href = "dashboard.html";
 
   } catch (error) {
 
